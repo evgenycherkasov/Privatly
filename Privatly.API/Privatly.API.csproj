@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.3" />
+        <PackageReference Include="Npgsql" Version="8.0.0-preview.1" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0-preview.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Controllers" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Privatly.API.ApplicationServices.Implementations\Privatly.API.ApplicationServices.Implementations.csproj" />
+      <ProjectReference Include="..\Privatly.API.Infrastructure.PostgreSQL\Privatly.API.Infrastructure.PostgreSQL.csproj" />
+      <ProjectReference Include="..\Privatly.API.Infrastructure.Yookassa\Privatly.API.Infrastructure.Yookassa.csproj" />
+    </ItemGroup>
+
+</Project>

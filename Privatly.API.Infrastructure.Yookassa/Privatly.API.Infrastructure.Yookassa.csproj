@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Options">
+        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\7.0.3\Microsoft.Extensions.Options.dll</HintPath>
+      </Reference>
+      <Reference Include="Yandex.Checkout.V3">
+        <HintPath>C:\Users\evgen\.nuget\packages\yandex.checkout.v3\1.7.0\lib\netstandard2.0\Yandex.Checkout.V3.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Yandex.Checkout.V3" Version="1.7.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Privatly.API.ApplicationServices.Interfaces\Privatly.API.ApplicationServices.Interfaces.csproj" />
+    </ItemGroup>
+
+</Project>

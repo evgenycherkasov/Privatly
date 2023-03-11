@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Privatly.API.Domain.Interfaces\Privatly.API.Domain.Interfaces.csproj" />
+      <ProjectReference Include="..\Privatly.API.Infrastructure.Database\Privatly.API.Infrastructure.Database.csproj" />
+    </ItemGroup>
+
+</Project>
