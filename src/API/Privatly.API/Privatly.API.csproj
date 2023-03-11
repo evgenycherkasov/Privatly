@@ -25,9 +25,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Privatly.API.ApplicationServices.Implementations\Privatly.API.ApplicationServices.Implementations.csproj" />
-      <ProjectReference Include="..\Privatly.API.Infrastructure.PostgreSQL\Privatly.API.Infrastructure.PostgreSQL.csproj" />
-      <ProjectReference Include="..\Privatly.API.Infrastructure.Yookassa\Privatly.API.Infrastructure.Yookassa.csproj" />
+      <ProjectReference Include="..\ApplicationServices\Privatly.API.ApplicationServices.Implementations\Privatly.API.ApplicationServices.Implementations.csproj" />
+      <ProjectReference Include="..\Infrastructure\Privatly.API.Infrastructure.PostgreSQL\Privatly.API.Infrastructure.PostgreSQL.csproj" />
+      <ProjectReference Include="..\Infrastructure\Privatly.API.Infrastructure.Yookassa\Privatly.API.Infrastructure.Yookassa.csproj" />
     </ItemGroup>
 
 </Project>

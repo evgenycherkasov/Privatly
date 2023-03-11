@@ -20,7 +20,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Privatly.API.ApplicationServices.Interfaces\Privatly.API.ApplicationServices.Interfaces.csproj" />
+      <ProjectReference Include="..\..\ApplicationServices\Privatly.API.ApplicationServices.Interfaces\Privatly.API.ApplicationServices.Interfaces.csproj" />
+      <ProjectReference Include="..\..\Domain\Privatly.API.Domain.Entities\Privatly.API.Domain.Entities.csproj" />
+      <ProjectReference Include="..\..\Domain\Privatly.API.Domain.Models\Privatly.API.Domain.Models.csproj" />
     </ItemGroup>
 
 </Project>

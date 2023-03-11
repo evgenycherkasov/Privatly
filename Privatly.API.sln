@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API", "Privatly.API\Privatly.API.csproj", "{E4552AFE-D014-4150-B886-5031AD84FA28}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API", "src\API\Privatly.API\Privatly.API.csproj", "{E4552AFE-D014-4150-B886-5031AD84FA28}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApplicationCore", "ApplicationCore", "{2DF0586E-8054-4BB2-A347-0DC4272A0071}"
 EndProject
@@ -8,25 +8,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{0CB89D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApplicationServices", "ApplicationServices", "{6B5B7B8B-5551-4D31-B6D3-796194EFE886}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.Domain.Entities", "Privatly.API.Domain.Entities\Privatly.API.Domain.Entities.csproj", "{E0799C94-3A05-4253-BAE5-AB4B3D65BAF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.Domain.Entities", "src\API\Domain\Privatly.API.Domain.Entities\Privatly.API.Domain.Entities.csproj", "{E0799C94-3A05-4253-BAE5-AB4B3D65BAF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.Domain.Interfaces", "Privatly.API.Domain.Interfaces\Privatly.API.Domain.Interfaces.csproj", "{D5D280AE-7503-4381-997A-1E31221E3156}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.Domain.Interfaces", "src\API\Domain\Privatly.API.Domain.Interfaces\Privatly.API.Domain.Interfaces.csproj", "{D5D280AE-7503-4381-997A-1E31221E3156}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{4D0882C0-0967-4694-B199-D2057AEFB5E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.Infrastructure.PostgreSQL", "Privatly.API.Infrastructure.PostgreSQL\Privatly.API.Infrastructure.PostgreSQL.csproj", "{C1C91CD8-D704-4E14-BBC7-3531C03DDACB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.Infrastructure.PostgreSQL", "src\API\Infrastructure\Privatly.API.Infrastructure.PostgreSQL\Privatly.API.Infrastructure.PostgreSQL.csproj", "{C1C91CD8-D704-4E14-BBC7-3531C03DDACB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.Infrastructure.Database", "Privatly.API.Infrastructure.Database\Privatly.API.Infrastructure.Database.csproj", "{CBB8A7E2-B1D0-41B4-9D18-D8EC2286BF02}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.Infrastructure.Database", "src\API\Infrastructure\Privatly.API.Infrastructure.Database\Privatly.API.Infrastructure.Database.csproj", "{CBB8A7E2-B1D0-41B4-9D18-D8EC2286BF02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.ApplicationServices.Interfaces", "Privatly.API.ApplicationServices.Interfaces\Privatly.API.ApplicationServices.Interfaces.csproj", "{2E302A94-533F-44A1-B8EC-546DB959C3C9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.ApplicationServices.Interfaces", "src\API\ApplicationServices\Privatly.API.ApplicationServices.Interfaces\Privatly.API.ApplicationServices.Interfaces.csproj", "{2E302A94-533F-44A1-B8EC-546DB959C3C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.ApplicationServices.Implementations", "Privatly.API.ApplicationServices.Implementations\Privatly.API.ApplicationServices.Implementations.csproj", "{7AB02445-F6C0-4D60-9528-29C9E45AA777}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.ApplicationServices.Implementations", "src\API\ApplicationServices\Privatly.API.ApplicationServices.Implementations\Privatly.API.ApplicationServices.Implementations.csproj", "{7AB02445-F6C0-4D60-9528-29C9E45AA777}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.Domain.Models", "Privatly.API.Domain.Models\Privatly.API.Domain.Models.csproj", "{5031988D-E581-4977-9F72-59446EF84AC7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.Domain.Models", "src\API\Domain\Privatly.API.Domain.Models\Privatly.API.Domain.Models.csproj", "{5031988D-E581-4977-9F72-59446EF84AC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.Infrastructure.Yookassa", "Privatly.API.Infrastructure.Yookassa\Privatly.API.Infrastructure.Yookassa.csproj", "{9C123C2F-ACDA-4B6D-8B52-EE84EF9712B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.Infrastructure.Yookassa", "src\API\Infrastructure\Privatly.API.Infrastructure.Yookassa\Privatly.API.Infrastructure.Yookassa.csproj", "{9C123C2F-ACDA-4B6D-8B52-EE84EF9712B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.Domain.Contracts", "Privatly.API.Domain.Contracts\Privatly.API.Domain.Contracts.csproj", "{2560BA2A-510A-4402-AE24-34BAF8596367}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.Domain.Contracts", "src\API\Domain\Privatly.API.Domain.Contracts\Privatly.API.Domain.Contracts.csproj", "{2560BA2A-510A-4402-AE24-34BAF8596367}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

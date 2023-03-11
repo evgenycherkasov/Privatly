@@ -7,11 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Privatly.API.Domain.Interfaces\Privatly.API.Domain.Interfaces.csproj" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0-preview.1.23111.4" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0-preview.1.23111.4" />
+      <ProjectReference Include="..\..\Domain\Privatly.API.Domain.Interfaces\Privatly.API.Domain.Interfaces.csproj" />
     </ItemGroup>
 
 </Project>

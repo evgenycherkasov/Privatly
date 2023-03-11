@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Privatly.API.Domain.Entities\Privatly.API.Domain.Entities.csproj" />
-      <ProjectReference Include="..\Privatly.API.Domain.Models\Privatly.API.Domain.Models.csproj" />
+      <ProjectReference Include="..\..\Domain\Privatly.API.Domain.Entities\Privatly.API.Domain.Entities.csproj" />
+      <ProjectReference Include="..\..\Domain\Privatly.API.Domain.Models\Privatly.API.Domain.Models.csproj" />
     </ItemGroup>
 
 </Project>
