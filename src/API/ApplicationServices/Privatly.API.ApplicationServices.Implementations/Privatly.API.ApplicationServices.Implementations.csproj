@@ -9,7 +9,6 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Domain\Privatly.API.Domain.Interfaces\Privatly.API.Domain.Interfaces.csproj" />
       <ProjectReference Include="..\Privatly.API.ApplicationServices.Interfaces\Privatly.API.ApplicationServices.Interfaces.csproj" />
-      <ProjectReference Include="..\Privatly.API.Domain.Interfaces\Privatly.API.Domain.Interfaces.csproj" />
     </ItemGroup>
 
     <ItemGroup>
