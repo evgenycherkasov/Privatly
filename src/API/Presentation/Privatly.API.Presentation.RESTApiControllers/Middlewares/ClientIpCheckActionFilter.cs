@@ -1,15 +1,17 @@
 ﻿using System.Net;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
 
-namespace Privatly.API.Middlewares;
+namespace Privatly.API.Presentation.RESTApiControllers.Middlewares;
 
 public class ClientIpCheckActionFilter : ActionFilterAttribute
 {
     private readonly ILogger _logger;
-    private readonly string _safeList;
+    private readonly string? _safeList;
 
-    public ClientIpCheckActionFilter(string safeList, ILogger logger)
+    public ClientIpCheckActionFilter(string? safeList, ILogger logger)
     {
         _safeList = safeList;
         _logger = logger;
@@ -20,14 +22,14 @@ public class ClientIpCheckActionFilter : ActionFilterAttribute
         var remoteIp = context.HttpContext.Connection.RemoteIpAddress;
         
         _logger.LogDebug("Remote IpAddress: {RemoteIp}", remoteIp);
-        var ip = _safeList.Split(';');
+        var ip = _safeList?.Split(';');
 
         if (remoteIp.IsIPv4MappedToIPv6)
         {
             remoteIp = remoteIp.MapToIPv4();
         }
 
-        var badIp = !ip.Select(IPAddress.Parse).Contains(remoteIp);
+        var badIp = ip != null && !ip.Select(IPAddress.Parse).Contains(remoteIp);
 
         if (badIp)
         {

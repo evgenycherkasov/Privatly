@@ -1,7 +1,8 @@
 ﻿using System.Net;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-namespace Privatly.API.Middlewares;
+namespace Privatly.API.Presentation.RESTApiControllers.Middlewares;
 
     public class ExceptionHandlerMiddleware
     {
