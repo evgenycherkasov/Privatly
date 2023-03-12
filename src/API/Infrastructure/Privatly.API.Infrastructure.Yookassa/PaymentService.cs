@@ -14,7 +14,7 @@ public class PaymentService : IPaymentService
             _paymentClient = new Client(yookassaAuthData.Value.ShopId, yookassaAuthData.Value.SecretKey).MakeAsync();
         }
 
-        public async Task<Domain.Models.Payment> CreatePaymentAsync(string userId, SubscriptionPlan subscriptionPlan, string returnUrl)
+        public async Task<Domain.Models.Payment> CreatePaymentAsync(int userId, SubscriptionPlan subscriptionPlan, string returnUrl)
         {
             var newPayment = new NewPayment()
             {
@@ -31,7 +31,7 @@ public class PaymentService : IPaymentService
                 },
                 Metadata = new()
                 {
-                    {"userId", userId},
+                    {"userId", userId.ToString()},
                     {"subscriptionPlanId", subscriptionPlan.Id.ToString()}
                 },
                 Receipt = new()

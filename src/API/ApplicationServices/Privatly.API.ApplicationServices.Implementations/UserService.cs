@@ -1,4 +1,5 @@
 ﻿using Privatly.API.ApplicationServices.Interfaces;
+using Privatly.API.Domain.Entities.Entities;
 using Privatly.API.Domain.Interfaces;
 
 namespace Privatly.API.ApplicationServices.Implementations;
@@ -23,5 +24,10 @@ public class UserService : IUserService
         {
             user.Password = newPasswordHash;
         }
+    }
+
+    public Task<User?> GetBy(int userId)
+    {
+        return _userRepository.GetAsync(userId);
     }
 }
