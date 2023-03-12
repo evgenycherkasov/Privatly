@@ -8,7 +8,6 @@ ARG Configuration=Release
 WORKDIR /src
 COPY *.* ./
 COPY . ./
-RUN ls -la /src
 RUN dotnet restore
 COPY . .
 
