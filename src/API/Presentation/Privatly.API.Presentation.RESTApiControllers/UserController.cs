@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Privatly.API.ApplicationServices.Interfaces;
 using Privatly.API.ApplicationServices.Interfaces.Payment;
 using Privatly.API.Domain.Contracts;
@@ -18,31 +19,37 @@ public class UserController : ControllerBase
         _subscriptionService = subscriptionService;
     }
 
-    [HttpPost("")]
-    public async Task<IActionResult> UpdatePassword(int userId, string? oldPassword, string newPassword)
+    [HttpPost("update_password")]
+    public async Task UpdatePassword(int userId, string? oldPassword, string newPassword)
     {
         var user = await _userService.GetBy(userId);
 
         if (user is null)
-            return NotFound();
+        {
+            Response.StatusCode = StatusCodes.Status404NotFound;
+            return;
+        }
 
         await _userService.SetPassword(user.Id, oldPassword, newPassword);
 
-        return Ok();
+        Response.StatusCode = StatusCodes.Status200OK;
     }
 
-    [HttpGet("")]
-    public async Task<IActionResult> GetUserBy(int userId)
+    [HttpGet]
+    public async Task<UserDto?> GetUserBy(int userId)
     {
         var user = await _userService.GetBy(userId);
 
         if (user is null)
-            return NotFound();
+        {
+            Response.StatusCode = StatusCodes.Status404NotFound;
+            return null;
+        }
 
         var subscriptionEndDate = await _subscriptionService.GetEndDateOfSubscriptionAsync(userId);
 
         var userDto = new UserDto(user.Id, subscriptionEndDate);
-        
-        return new OkObjectResult(userDto);
+
+        return userDto;
     }
 }

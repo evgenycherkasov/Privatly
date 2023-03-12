@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Privatly.API.ApplicationServices.Interfaces;
 using Privatly.API.ApplicationServices.Interfaces.Payment;
 using Privatly.API.Domain.Entities.Entities.Payments;
@@ -29,59 +30,55 @@ public class PaymentController : ControllerBase
     }
 
     [HttpGet("create_payment/{userId}/{subscriptionPlanId}/{returnUrl}")]
-    public async Task<IActionResult> CreatePayment(int userId, int subscriptionPlanId, string returnUrl)
+    public async Task<string> CreatePayment(int userId, int subscriptionPlanId, string returnUrl)
     {
         var user = await _userService.GetBy(userId);
 
         if (user is null)
-            return new NotFoundResult();
+        {
+            Response.StatusCode = StatusCodes.Status404NotFound;
+            return string.Empty;
+        }
 
         var subscriptionPlan = await _subscriptionPlanService.GetSubscriptionPlan(subscriptionPlanId);
 
         if (subscriptionPlan is null)
-            return new NotFoundResult();
+        {
+            Response.StatusCode = StatusCodes.Status404NotFound;
+            return string.Empty;
+        }
 
         var payment = await _paymentService.CreatePaymentAsync(userId, subscriptionPlan, returnUrl);
 
         await _transactionService.CreateTransaction(userId, payment.Id, TransactionStatus.Pending, payment.Price,
             DateTime.Now);
-            
-        return new OkObjectResult(payment.PaymentUrl);
+
+        return payment.PaymentUrl;
     }
 
     [ServiceFilter(typeof(ClientIpCheckActionFilter))]
     [HttpPost]
-    public async Task<IActionResult> PaymentCallbackHandler()
+    public async Task PaymentCallbackHandler()
     {
-        try
+        var message = await AsyncClient.ParseMessageAsync(Request.Method, Request.ContentType, Request.Body);
+        var transactionId = message.Object.Id;
+        var transactionStatus = message.Object.Status switch
         {
-            var message = await AsyncClient.ParseMessageAsync(Request.Method, Request.ContentType, Request.Body);
-            var transactionId = message.Object.Id;
-            var transactionStatus = message.Object.Status switch
-            {
-                PaymentStatus.Pending => TransactionStatus.Pending,
-                PaymentStatus.Canceled => TransactionStatus.Canceled,
-                PaymentStatus.WaitingForCapture => TransactionStatus.WaitingForCapture,
-                PaymentStatus.Succeeded => TransactionStatus.Succeeded,
-                _ => throw new ArgumentException("Неизвестный статус транзакции")
-            };
-            await _transactionService.UpdateTransactionStatus(transactionId, transactionStatus);
+            PaymentStatus.Pending => TransactionStatus.Pending,
+            PaymentStatus.Canceled => TransactionStatus.Canceled,
+            PaymentStatus.WaitingForCapture => TransactionStatus.WaitingForCapture,
+            PaymentStatus.Succeeded => TransactionStatus.Succeeded,
+            _ => throw new ArgumentException("Неизвестный статус транзакции")
+        };
+        await _transactionService.UpdateTransactionStatus(transactionId, transactionStatus);
 
-            if (transactionStatus == TransactionStatus.WaitingForCapture)
-            {
-                await HandleWaitingForCapturePayment(message);
-            }
-            else if (transactionStatus == TransactionStatus.Succeeded)
-            {
-                await HandleSucceededPaymentAsync(message, transactionId);
-            }
-
-            return Ok();
+        if (transactionStatus == TransactionStatus.WaitingForCapture)
+        {
+            await HandleWaitingForCapturePayment(message);
         }
-        catch (ArgumentException)
+        else if (transactionStatus == TransactionStatus.Succeeded)
         {
-            //log
-            return new NotFoundResult();
+            await HandleSucceededPaymentAsync(message, transactionId);
         }
     }
 
@@ -94,10 +91,10 @@ public class PaymentController : ControllerBase
             var userId = int.Parse(userIdString);
 
             var subscriptionPlan = await _subscriptionPlanService.GetSubscriptionPlan(subscriptionPlanId);
-            
+
             if (subscriptionPlan is null)
                 throw new ArgumentException();
-            
+
             var transaction = await _transactionService.GetTransactionAsync(transactionId);
 
             if (transaction is null)

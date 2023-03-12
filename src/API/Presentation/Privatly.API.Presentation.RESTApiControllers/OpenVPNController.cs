@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Privatly.API.ApplicationServices.Interfaces;
 using Privatly.API.ApplicationServices.Interfaces.Payment;
 // ReSharper disable InconsistentNaming
@@ -19,18 +20,24 @@ public class OpenVPNController : ControllerBase
     }
 
     [HttpGet("{login}/{passwordHash}")]
-    public async Task<IActionResult> IsUserHasActiveSubscription(string login, string passwordHash)
+    public async Task<bool?> IsUserHasActiveSubscription(string login, string passwordHash)
     {
         if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(passwordHash))
-            return NotFound();
+        {
+            Response.StatusCode = StatusCodes.Status404NotFound;
+            return null;
+        }
 
         var user = await _userService.GetBy(login, passwordHash);
 
         if (user is null)
-            return NotFound();
-
+        {
+            Response.StatusCode = StatusCodes.Status404NotFound;
+            return null;
+        }
+            
         var isUserHasActiveSubscription = await _subscriptionService.IsSubscriptionActiveAsync(user.Id);
 
-        return Ok(isUserHasActiveSubscription);
+        return isUserHasActiveSubscription;
     }
 }

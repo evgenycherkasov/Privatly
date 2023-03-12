@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Privatly.API.ApplicationServices.Interfaces;
 using Privatly.API.Domain.Contracts;
 
@@ -15,24 +16,25 @@ public class TelegramUserController : ControllerBase
         _telegramUserService = telegramUserService;
     }
 
-    [HttpPost]
-    public async Task<IActionResult> CreateUser(string telegramId, string? username)
+    [HttpPost("/create")]
+    public async Task<UserDto> CreateUser(string telegramId, string? username)
     {
         var user = await _telegramUserService.Create(telegramId, username);
 
         var userDto = new UserDto(user.Id, null);
 
-        return new OkObjectResult(userDto);
+        return userDto;
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetUserIdBy(string telegramId)
+    public async Task<int?> GetUserIdBy(string telegramId)
     {
         var userId = await _telegramUserService.GetUserIdBy(telegramId);
 
-        if (!userId.HasValue)
-            return NotFound();
-
-        return new OkObjectResult(userId.Value);
+        if (userId.HasValue) 
+            return userId.Value;
+        
+        Response.StatusCode = StatusCodes.Status404NotFound;
+        return null;
     }
 }
