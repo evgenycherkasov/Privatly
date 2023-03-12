@@ -13,7 +13,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\ApplicationServices\Privatly.API.ApplicationServices.Interfaces\Privatly.API.ApplicationServices.Interfaces.csproj" />
-      <ProjectReference Include="..\..\Privatly.API\Privatly.API.csproj" />
+      <ProjectReference Include="..\..\Domain\Privatly.API.Domain.Contracts\Privatly.API.Domain.Contracts.csproj" />
     </ItemGroup>
 
 </Project>
