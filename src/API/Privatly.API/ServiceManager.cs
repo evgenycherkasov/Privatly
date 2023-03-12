@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.EntityFrameworkCore;
 using Privatly.API.ApplicationServices.Implementations;
 using Privatly.API.ApplicationServices.Implementations.Payment;
 using Privatly.API.ApplicationServices.Interfaces;
@@ -7,6 +9,8 @@ using Privatly.API.Domain.Interfaces;
 using Privatly.API.Infrastructure.PostgreSQL;
 using Privatly.API.Infrastructure.PostgreSQL.Repositories;
 using Privatly.API.Infrastructure.Yookassa;
+using Privatly.API.Presentation.RESTApiControllers;
+using Privatly.API.Presentation.RESTApiControllers.Middlewares;
 
 namespace Privatly.API;
 
@@ -42,8 +46,22 @@ public class ServiceManager
         services.AddScoped<ISubscriptionService, SubscriptionService>();
         services.AddScoped<ITransactionService, TransactionService>();
         
-        services.AddControllers();
+        services.AddSingleton(container =>
+        {
+            var loggerFactory = container.GetRequiredService<ILoggerFactory>();
+            var logger = loggerFactory.CreateLogger<ClientIpCheckActionFilter>();
+
+            return new ClientIpCheckActionFilter(
+                _configuration["YookassaIpsSafeList"], logger);
+        });
+
+        var controllersAssembly = typeof(PaymentController).GetTypeInfo().Assembly;
+        
+        services.AddControllers()
+            .ConfigureApplicationPartManager(apm => apm.ApplicationParts.Add(new AssemblyPart(controllersAssembly)));
+        
         services.AddEndpointsApiExplorer();
+        
         services.AddSwaggerGen();
     }
 }
