@@ -7,4 +7,6 @@ public interface IUserService
     Task SetPassword(int userId, string? oldPasswordHash, string newPasswordHash);
 
     Task<User?> GetBy(int userId);
+
+    Task<User?> GetBy(string login, string passwordHash);
 }

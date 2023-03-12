@@ -30,4 +30,11 @@ public class UserService : IUserService
     {
         return _userRepository.GetAsync(userId);
     }
+
+    public async Task<User?> GetBy(string login, string passwordHash)
+    {
+        var user = await _userRepository.GetAsync(u => u.Login == login && u.Password == passwordHash);
+
+        return user.FirstOrDefault();
+    }
 }
