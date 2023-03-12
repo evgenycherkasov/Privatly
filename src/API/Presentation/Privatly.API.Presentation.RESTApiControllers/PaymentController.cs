@@ -2,7 +2,7 @@
 using Privatly.API.ApplicationServices.Interfaces;
 using Privatly.API.ApplicationServices.Interfaces.Payment;
 using Privatly.API.Domain.Entities.Entities.Payments;
-using Privatly.API.Middlewares;
+using Privatly.API.Presentation.RESTApiControllers.Middlewares;
 using Yandex.Checkout.V3;
 
 namespace Privatly.API.Presentation.RESTApiControllers;
@@ -45,6 +45,7 @@ public class PaymentController : ControllerBase
 
         await _transactionService.CreateTransaction(userId, payment.Id, TransactionStatus.Pending, payment.Price,
             DateTime.Now);
+            
         return new OkObjectResult(payment.PaymentUrl);
     }
 
