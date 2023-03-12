@@ -22,7 +22,7 @@ public class ServiceManager
     public void Configure(IServiceCollection services)
     {
         services.AddDbContext<PostgreDatabaseContext>(options =>
-            options.UseNpgsql(_configuration.GetConnectionString("ApiPostgresConnection")));
+            options.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")));
 
         services.Configure<YookassaAuthData>(_configuration.GetSection("YookassaAuthData")); //get from proc env;
 
