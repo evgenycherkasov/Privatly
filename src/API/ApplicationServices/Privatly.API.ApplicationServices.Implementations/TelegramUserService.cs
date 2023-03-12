@@ -20,4 +20,16 @@ public class TelegramUserService : ITelegramUserService
 
         return _telegramUserRepository.AddAsync(telegramId, userName);
     }
+
+    public async Task<int?> GetUserIdBy(string telegramId)
+    {
+        if (string.IsNullOrEmpty(telegramId))
+            throw new ArgumentNullException(nameof(telegramId));
+
+        var telegramUsers = await _telegramUserRepository.GetAsync(u => u.TelegramId == telegramId);
+
+        var user = telegramUsers.FirstOrDefault();
+
+        return user?.Id;
+    }
 }

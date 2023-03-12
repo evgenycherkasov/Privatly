@@ -13,14 +13,14 @@ public class UserService : IUserService
         _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
     }
 
-    public async Task SetPassword(int userId, string oldPasswordHash, string newPasswordHash)
+    public async Task SetPassword(int userId, string? oldPasswordHash, string newPasswordHash)
     {
         var user = await _userRepository.GetAsync(userId);
         
         if (user is null)
             return;
 
-        if (user.Password is null || user.Password == oldPasswordHash)
+        if (user.Password == oldPasswordHash)
         {
             user.Password = newPasswordHash;
         }
