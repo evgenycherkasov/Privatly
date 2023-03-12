@@ -28,6 +28,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.Domain.Contracts", "src\API\Domain\Privatly.API.Domain.Contracts\Privatly.API.Domain.Contracts.csproj", "{2560BA2A-510A-4402-AE24-34BAF8596367}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{17EEB66C-FE81-4AFC-8645-EED506721A85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Privatly.API.Presentation.RESTApiControllers", "src\API\Presentation\Privatly.API.Presentation.RESTApiControllers\Privatly.API.Presentation.RESTApiControllers.csproj", "{2C6C142A-8DD8-411A-83E0-9797301C1F7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +78,10 @@ Global
 		{2560BA2A-510A-4402-AE24-34BAF8596367}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2560BA2A-510A-4402-AE24-34BAF8596367}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2560BA2A-510A-4402-AE24-34BAF8596367}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C6C142A-8DD8-411A-83E0-9797301C1F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C6C142A-8DD8-411A-83E0-9797301C1F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C6C142A-8DD8-411A-83E0-9797301C1F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C6C142A-8DD8-411A-83E0-9797301C1F7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0CB89DBC-A39F-4C0F-837A-44319B99BCAB} = {2DF0586E-8054-4BB2-A347-0DC4272A0071}
@@ -87,5 +95,6 @@ Global
 		{5031988D-E581-4977-9F72-59446EF84AC7} = {0CB89DBC-A39F-4C0F-837A-44319B99BCAB}
 		{9C123C2F-ACDA-4B6D-8B52-EE84EF9712B0} = {4D0882C0-0967-4694-B199-D2057AEFB5E6}
 		{2560BA2A-510A-4402-AE24-34BAF8596367} = {0CB89DBC-A39F-4C0F-837A-44319B99BCAB}
+		{2C6C142A-8DD8-411A-83E0-9797301C1F7E} = {17EEB66C-FE81-4AFC-8645-EED506721A85}
 	EndGlobalSection
 EndGlobal

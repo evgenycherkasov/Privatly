@@ -21,10 +21,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\ApplicationServices\Privatly.API.ApplicationServices.Implementations\Privatly.API.ApplicationServices.Implementations.csproj" />
       <ProjectReference Include="..\Infrastructure\Privatly.API.Infrastructure.PostgreSQL\Privatly.API.Infrastructure.PostgreSQL.csproj" />
       <ProjectReference Include="..\Infrastructure\Privatly.API.Infrastructure.Yookassa\Privatly.API.Infrastructure.Yookassa.csproj" />
