@@ -7,10 +7,12 @@ namespace Privatly.API.ApplicationServices.Implementations;
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UserService(IUserRepository userRepository)
+    public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork)
     {
         _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+        _unitOfWork = unitOfWork;
     }
 
     public async Task SetPassword(int userId, string? oldPasswordHash, string newPasswordHash)
@@ -24,6 +26,10 @@ public class UserService : IUserService
         {
             user.Password = newPasswordHash;
         }
+
+        _userRepository.Update(user);
+
+        await _unitOfWork.CommitAsync();
     }
 
     public Task<User?> GetBy(int userId)

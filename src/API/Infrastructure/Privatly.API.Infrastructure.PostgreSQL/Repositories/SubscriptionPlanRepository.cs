@@ -13,7 +13,11 @@ public class SubscriptionPlanRepository : EFGenericRepository<SubscriptionPlan>,
 
     public async Task<SubscriptionPlan> AddAsync(string name, string description, int durationDays, decimal price)
     {
-        var subscription = new SubscriptionPlan(name, description, durationDays, price, false);
+        var subscription = Create();
+        subscription.Name = name;
+        subscription.Description = description;
+        subscription.DurationDays = durationDays;
+        subscription.Price = price;
         return await AddAsync(subscription);
     }
 }

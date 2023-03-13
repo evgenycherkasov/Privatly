@@ -7,18 +7,24 @@ namespace Privatly.API.ApplicationServices.Implementations;
 public class TelegramUserService : ITelegramUserService
 {
     private readonly ITelegramUserRepository _telegramUserRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public TelegramUserService(ITelegramUserRepository telegramUserRepository)
+    public TelegramUserService(ITelegramUserRepository telegramUserRepository, IUnitOfWork unitOfWork)
     {
         _telegramUserRepository = telegramUserRepository ?? throw new ArgumentNullException(nameof(telegramUserRepository));
+        _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
-    public Task<TelegramUser> Create(string telegramId, string? userName)
+    public async Task<TelegramUser> Create(string telegramId, string? userName)
     {
         if (string.IsNullOrEmpty(telegramId))
             throw new ArgumentNullException(nameof(telegramId));
 
-        return _telegramUserRepository.AddAsync(telegramId, userName);
+        var user = await _telegramUserRepository.AddAsync(telegramId, userName);
+
+        await _unitOfWork.CommitAsync();
+
+        return user;
     }
 
     public async Task<int?> GetUserIdBy(string telegramId)

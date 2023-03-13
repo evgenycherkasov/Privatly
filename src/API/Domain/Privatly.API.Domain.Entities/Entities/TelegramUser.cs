@@ -1,3 +1,12 @@
 ﻿namespace Privatly.API.Domain.Entities.Entities;
 
-public record TelegramUser(string TelegramId, string? UserName) : User(TelegramId);
+public record TelegramUser : User
+{
+    public TelegramUser()
+    {
+        
+    }
+    
+    public string TelegramId { get; set; }
+    public string? UserName { get; set; }
+}

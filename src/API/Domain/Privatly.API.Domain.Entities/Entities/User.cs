@@ -1,6 +1,12 @@
 ﻿namespace Privatly.API.Domain.Entities.Entities;
 
-public abstract record User(string Login) : Entity<int>
+public record User : Entity<int>
 {
+    public User()
+    {
+        
+    }
+    
     public string? Password { get; set; }
+    public string Login { get; set; }
 }

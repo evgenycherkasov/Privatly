@@ -14,8 +14,13 @@ public class SubscriptionRepository : EFGenericRepository<Subscription>, ISubscr
     public Task<Subscription> AddAsync(int userId, SubscriptionPlan subscriptionPlan, Transaction transaction,
         DateTime startTime, DateTime endTime)
     {
-        var subscription = new Subscription(userId, subscriptionPlan, transaction, startTime, endTime);
-
+        var subscription = Create();
+        subscription.UserId = userId;
+        subscription.SubscriptionPlan = subscriptionPlan;
+        subscription.Transaction = transaction;
+        subscription.StartTime = startTime;
+        subscription.EndTime = endTime;
+        
         return AddAsync(subscription);
     }
 

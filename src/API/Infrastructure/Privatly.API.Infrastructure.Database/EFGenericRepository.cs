@@ -7,7 +7,7 @@ namespace Privatly.API.Infrastructure.Database;
 
 // ReSharper disable once InconsistentNaming
 public abstract class EFGenericRepository<TEntity> : IGenericRepository<TEntity>
-    where TEntity : BaseEntity
+    where TEntity : BaseEntity, new()
 {
     protected readonly DbContext DbContext;
     protected readonly DbSet<TEntity> DbSet;
@@ -84,6 +84,11 @@ public abstract class EFGenericRepository<TEntity> : IGenericRepository<TEntity>
         }
 
         return await DbSet.FindAsync(id);
+    }
+
+    protected TEntity Create()
+    {
+        return new TEntity();
     }
 
     public virtual async Task<IEnumerable<TEntity?>> GetAsync(Expression<Func<TEntity, bool>>? filter = null,

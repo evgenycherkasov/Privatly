@@ -7,16 +7,17 @@ namespace Privatly.API.Infrastructure.PostgreSQL.Repositories;
 
 public class TelegramUserRepository : EFGenericRepository<TelegramUser>, ITelegramUserRepository
 {
-    public TelegramUserRepository(DbContext context) : base(context)
+    public TelegramUserRepository(PostgreDatabaseContext context) : base(context)
     {
     }
 
     public Task<TelegramUser> AddAsync(string telegramId, string? userName)
     {
-        var telegramUser = new TelegramUser(telegramId, userName)
-        {
-            Login = telegramId
-        };
+        var telegramUser = Create();
+
+        telegramUser.Login = telegramId;
+        telegramUser.TelegramId = telegramId;
+        telegramUser.UserName = userName;
 
         return AddAsync(telegramUser);
     }

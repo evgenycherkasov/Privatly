@@ -21,21 +21,32 @@ public sealed class PostgreDatabaseContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<SubscriptionPlan>().HasData(
-            new SubscriptionPlan("Месяц", "Полный доступ на месяц к Privatly VPN",
-                30, 600, false)
+            new SubscriptionPlan
             {
-                Id = 1
+                Id = 1,
+                Name = "Месяц",
+                Description = "Полный доступ на месяц к Privatly VPN",
+                DurationDays = 30,
+                Price = 500,
+                IsObsolete = false
             },
-            new SubscriptionPlan("Три месяца", "Полный доступ на 3 месяца к Privatly VPN",
-                90, 1600, false)
+            new SubscriptionPlan
             {
                 Id = 2,
+                Name = "Три месяца",
+                Description = "Полный доступ на 3 месяца к Privatly VPN",
+                DurationDays = 90,
+                Price = 1300,
+                IsObsolete = false
             },
-            new SubscriptionPlan("Год", "Полный доступ на 12 месяцев к Privatly VPN", 
-                365, 4200, false)
+            new SubscriptionPlan
             {
                 Id = 3,
-            }
-        );
+                Name = "Год",
+                Description = "Полный доступ на 12 месяцев к Privatly VPN",
+                DurationDays = 365,
+                Price = 4500,
+                IsObsolete = false
+            });
     }
 }

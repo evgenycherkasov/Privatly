@@ -1,8 +1,15 @@
 ﻿namespace Privatly.API.Domain.Entities.Entities.Payments;
 
-public record Transaction(int UserId, string TransactionId, TransactionStatus TransactionStatus,
-    DateTime LastStatusUpdateTimeStamp, decimal Price) : Entity<int>
+public record Transaction : Entity<int>
 {
-    public TransactionStatus TransactionStatus { get; set; } = TransactionStatus;
-    public DateTime LastStatusUpdateTimeStamp { get; set; } = LastStatusUpdateTimeStamp;
+    public Transaction()
+    {
+        
+    }
+    
+    public TransactionStatus TransactionStatus { get; set; }
+    public DateTime LastStatusUpdateTimeStamp { get; set; }
+    public int UserId { get; set; }
+    public string TransactionId { get; set; }
+    public decimal Price { get; set; }
 }

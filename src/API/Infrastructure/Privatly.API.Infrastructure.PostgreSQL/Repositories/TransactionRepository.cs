@@ -14,7 +14,12 @@ public class TransactionRepository : EFGenericRepository<Transaction>, ITransact
     public async Task<Transaction> AddAsync(int userId, string transactionId, TransactionStatus status,
         decimal price, DateTime lastStatusUpdateTimeStamp)
     {
-        var transaction = new Transaction(userId, transactionId, status, lastStatusUpdateTimeStamp, price);
+        var transaction = Create();
+        transaction.TransactionId = transactionId;
+        transaction.TransactionStatus = status;
+        transaction.LastStatusUpdateTimeStamp = lastStatusUpdateTimeStamp;
+        transaction.UserId = userId;
+        transaction.Price = price;
 
         return await AddAsync(transaction);
     }

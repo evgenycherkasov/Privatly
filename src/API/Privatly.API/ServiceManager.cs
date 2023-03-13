@@ -26,7 +26,7 @@ public class ServiceManager
     public void Configure(IServiceCollection services)
     {
         services.AddDbContext<PostgreDatabaseContext>(options =>
-            options.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")));
+            options.UseNpgsql("host=127.0.0.1;port=5432;database=privatlyapi;username=admin;password=password"));// Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")));
 
         services.Configure<YookassaAuthData>(_configuration.GetSection("YookassaAuthData")); //get from proc env;
 
