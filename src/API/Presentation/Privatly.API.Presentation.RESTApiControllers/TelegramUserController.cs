@@ -17,11 +17,11 @@ public class TelegramUserController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<UserDto> CreateUser(string telegramId, string username)
+    public async Task<UserDto> CreateUser(string telegramId, string? username)
     {
         var user = await _telegramUserService.Create(telegramId, username);
         
-        var userDto = new UserDto(user.Id, user.UserName, user.Password, null);
+        var userDto = new UserDto(user.Id, user.Login, user.Password, null);
 
         return userDto;
     }

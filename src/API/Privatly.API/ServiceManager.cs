@@ -28,7 +28,7 @@ public class ServiceManager
         services.AddDbContext<PostgreDatabaseContext>(options =>
             options.UseNpgsql("host=127.0.0.1;port=5432;database=privatlyapi;username=admin;password=password"));// Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")));
 
-        services.Configure<YookassaAuthData>(_configuration.GetSection("YookassaAuthData")); //get from proc env;
+        services.Configure<YookassaAuthData>(_configuration.GetSection("YookassaAuthData"));
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -52,7 +52,7 @@ public class ServiceManager
             var logger = loggerFactory.CreateLogger<ClientIpCheckActionFilter>();
 
             return new ClientIpCheckActionFilter(
-                _configuration["YookassaIpsSafeList"], logger);
+                _configuration.GetValue<string>("YookassaIpsSafeList"), logger);
         });
 
         var controllersAssembly = typeof(PaymentController).GetTypeInfo().Assembly;

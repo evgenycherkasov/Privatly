@@ -11,7 +11,7 @@ public class TelegramUserRepository : EFGenericRepository<TelegramUser>, ITelegr
     {
     }
 
-    public Task<TelegramUser> AddAsync(string telegramId, string userName, string password)
+    public Task<TelegramUser> AddAsync(string telegramId, string? userName, string password)
     {
         var telegramUser = Create();
 

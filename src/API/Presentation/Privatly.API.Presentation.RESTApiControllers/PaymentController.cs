@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Privatly.API.ApplicationServices.Interfaces;
 using Privatly.API.ApplicationServices.Interfaces.Payment;
 using Privatly.API.Domain.Entities.Entities.Payments;
+using Privatly.API.Presentation.RESTApiControllers.Middlewares;
 using Yandex.Checkout.V3;
 
 namespace Privatly.API.Presentation.RESTApiControllers;
@@ -54,12 +55,12 @@ public class PaymentController : ControllerBase
         var payment = await _paymentService.CreatePaymentAsync(userId, subscriptionPlan, decodedReturnUrl);
 
         await _transactionService.CreateTransaction(userId, payment.Id, TransactionStatus.Pending, payment.Price,
-            DateTime.Now.ToUniversalTime());
+            DateTime.Now);
 
         return payment.PaymentUrl;
     }
 
-    //[ServiceFilter(typeof(ClientIpCheckActionFilter))]
+    [ServiceFilter(typeof(ClientIpCheckActionFilter))]
     [HttpPost]
     public async Task PaymentCallbackHandler()
     {

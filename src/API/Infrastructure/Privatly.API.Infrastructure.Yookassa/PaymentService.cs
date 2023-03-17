@@ -11,8 +11,7 @@ public class PaymentService : IPaymentService
 
         public PaymentService(IOptions<YookassaAuthData> yookassaAuthData)
         {
-            _paymentClient =
-                new Client("203754", "test__Qbqb1ny9W_BLtxXUcjbg9GVGGetxhcybWmmRG3HVH4").MakeAsync(); //(yookassaAuthData.Value.ShopId, yookassaAuthData.Value.SecretKey).MakeAsync();
+            _paymentClient = new Client(yookassaAuthData.Value.ShopId, yookassaAuthData.Value.SecretKey).MakeAsync();
         }
 
         public async Task<Domain.Models.Payment> CreatePaymentAsync(int userId, SubscriptionPlan subscriptionPlan, string returnUrl)
