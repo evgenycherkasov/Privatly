@@ -1,4 +1,4 @@
-import {getSubscriptionPlans, getPaymentUrl, getUserId, createUser, getUser, createPassword} from "../api/privatlyApiInteraction.js";
+import {getSubscriptionPlans, getPaymentUrl, getUserId, createUser, getUser} from "../api/privatlyApiInteraction.js";
 
 const returnUrl = "https://web.telegram.org/k/#@DesignLidsBot";
 

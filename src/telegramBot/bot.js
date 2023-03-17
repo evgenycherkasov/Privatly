@@ -33,7 +33,7 @@ export async function getTelegramBot(token, apiService) {
 
         let isSubscriptionActive = subscriptionEndDate > Date.now();
 
-        return texts.accountMenu.title(user.username, user.password, isSubscriptionActive, new Date(subscriptionEndDate).toDateString());
+        return texts.accountMenu.title(user.login, user.password, isSubscriptionActive, new Date(subscriptionEndDate).toDateString());
     });
 
     const faqMenu = new MenuTemplate(texts.faqMenu.title);
@@ -55,12 +55,21 @@ export async function getTelegramBot(token, apiService) {
         let userId = await apiService.getUserId(ctx.from.id);
 
         if (userId === null) {
-            let userId = await apiService.createUser(ctx.from.id);
-            await apiService.createPassword(userId);
+            await apiService.createUser(ctx.from.id);
         }
 
         return menuMiddleware.replyToContext(ctx)
-    })
+    });
+
+    bot.command('download', async ctx => {
+        let userId = await apiService.getUserId(ctx.from.id);
+        let user = await apiService.getUser(userId);
+
+        let subscriptionEndDate = Date.parse(user.subscriptionEndDate);
+        let isSubscriptionActive = subscriptionEndDate > Date.now();
+
+        await ctx.reply(texts.downloadCommand.text(isSubscriptionActive));
+    });
 
     bot.use(menuMiddleware.middleware())
 

@@ -15,7 +15,7 @@ const texts = {
 
     accountMenu : {
         buttonText : "My account",
-        title : (userName, password, isSubscriptionActive, endDate) => `That's your account informationℹ️\n\nYour login: ${userName}\nYour password: ${password}\n\n${isSubscriptionActive ? `You have active subscription untill ${endDate}👍` : 'You have not active subscription😔'}`
+        title : (userName, password, isSubscriptionActive, endDate) => `That's your account informationℹ️\n\nYour login: ${userName}\nYour password: ${password}\n\n${isSubscriptionActive ? `You have active subscription until ${endDate}👍` : 'You have not active subscription😔'}\n\nIf you lost some links or files you can press /download!`
     },
 
     faqMenu : {
@@ -26,6 +26,10 @@ const texts = {
     paymentMenu : {
         buttonText : (price, plan) => `${plan} | ${price} rubles`,
         title : (price, plan, description) => `You сhoose ${plan} option!\n\n${description}\n\nPrice of this subscription is ${price} rubles`
+    },
+
+    downloadCommand : {
+        text : (isSubscriptionActive) => `${isSubscriptionActive ? 'You can download application for your laptop or PC by link below🧑‍💻\n\n dropbox link to desktop app\n\nAlso, you can use .ovpn configuration to setup your OpenVPN Connect application via smartphone' : 'Sorry but you have not active subscription😔'}`
     }
 }
 export default texts;
