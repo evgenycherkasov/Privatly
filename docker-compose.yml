@@ -5,19 +5,19 @@ networks:
     driver: bridge 
 
 services:
-  privatlyapi:
-    image: privatlyapi:latest
-    depends_on:
-      - "postgres_image"
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "80:80"
-    environment:
-      DB_CONNECTION_STRING: "host=postgres_image;port=5432;database=privatlyapi;username=admin;password=password"
-    networks:
-      - network-dev  
+  # privatlyapi:
+  #   image: privatlyapi:latest
+  #   depends_on:
+  #     - "postgres_image"
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "80:80"
+  #   environment:
+  #     DB_CONNECTION_STRING: "host=postgres_image;port=5432;database=privatlyapi;username=admin;password=password"
+  #   networks:
+  #     - network-dev  
   
   postgres_image:
     image: postgres:14-alpine
