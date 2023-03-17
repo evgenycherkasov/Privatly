@@ -7,6 +7,6 @@ public record User : Entity<int>
         
     }
     
-    public string? Password { get; set; }
+    public string Password { get; set; }
     public string Login { get; set; }
 }
