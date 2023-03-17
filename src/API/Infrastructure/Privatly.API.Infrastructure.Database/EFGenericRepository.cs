@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Privatly.API.Domain.Entities;
+using Privatly.API.Domain.Entities.Entities.Payments;
 using Privatly.API.Domain.Interfaces;
 
 namespace Privatly.API.Infrastructure.Database;
@@ -71,7 +72,7 @@ public abstract class EFGenericRepository<TEntity> : IGenericRepository<TEntity>
         DbSet.RemoveRange(entity!);
     }
 
-    public async Task<IEnumerable<TEntity?>> GetAllAsync()
+    public async Task<IReadOnlyCollection<TEntity>> GetAllAsync()
     {
         return await GetQueryable().ToListAsync();
     }

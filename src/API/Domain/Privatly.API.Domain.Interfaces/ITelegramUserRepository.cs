@@ -4,5 +4,5 @@ namespace Privatly.API.Domain.Interfaces;
 
 public interface ITelegramUserRepository : IGenericRepository<TelegramUser>
 {
-    Task<TelegramUser> AddAsync(string telegramId, string? userName);
+    Task<TelegramUser> AddAsync(string telegramId, string userName, string password);
 }

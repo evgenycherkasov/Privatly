@@ -11,13 +11,14 @@ public class TelegramUserRepository : EFGenericRepository<TelegramUser>, ITelegr
     {
     }
 
-    public Task<TelegramUser> AddAsync(string telegramId, string? userName)
+    public Task<TelegramUser> AddAsync(string telegramId, string userName, string password)
     {
         var telegramUser = Create();
 
         telegramUser.Login = telegramId;
         telegramUser.TelegramId = telegramId;
         telegramUser.UserName = userName;
+        telegramUser.Password = password;
 
         return AddAsync(telegramUser);
     }

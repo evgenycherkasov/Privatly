@@ -24,28 +24,28 @@ public sealed class PostgreDatabaseContext : DbContext
             new SubscriptionPlan
             {
                 Id = 1,
-                Name = "Месяц",
-                Description = "Полный доступ на месяц к Privatly VPN",
+                Name = "1 Month",
+                Description = "Get full access to Privately VPN for a month",
                 DurationDays = 30,
-                Price = 500,
+                Price = 350,
                 IsObsolete = false
             },
             new SubscriptionPlan
             {
                 Id = 2,
-                Name = "Три месяца",
-                Description = "Полный доступ на 3 месяца к Privatly VPN",
+                Name = "3 Months",
+                Description = "Get full access to Privately VPN for 3 months",
                 DurationDays = 90,
-                Price = 1300,
+                Price = 800,
                 IsObsolete = false
             },
             new SubscriptionPlan
             {
                 Id = 3,
-                Name = "Год",
-                Description = "Полный доступ на 12 месяцев к Privatly VPN",
+                Name = "1 Year",
+                Description = "Get full access to Privately VPN for a year",
                 DurationDays = 365,
-                Price = 4500,
+                Price = 3500,
                 IsObsolete = false
             });
     }

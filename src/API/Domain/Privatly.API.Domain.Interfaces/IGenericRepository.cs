@@ -12,7 +12,7 @@ public interface IGenericRepository<TEntity>
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         Expression<Func<TEntity, object>>[]? includes = null, int? skip = null, int? take = null);
     
-    Task<IEnumerable<TEntity?>> GetAllAsync();
+    Task<IReadOnlyCollection<TEntity>> GetAllAsync();
     
     Task<int> CountAsync(Expression<Func<TEntity, bool>>? filter = null);
     
