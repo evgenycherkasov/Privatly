@@ -15,13 +15,15 @@ public class TelegramUserService : ITelegramUserService
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
-    public async Task<TelegramUser> Create(string telegramId, string? userName)
+    public async Task<TelegramUser> Create(string telegramId, string userName)
     {
         if (string.IsNullOrEmpty(telegramId))
             throw new ArgumentNullException(nameof(telegramId));
 
-        var user = await _telegramUserRepository.AddAsync(telegramId, userName);
+        var userPassword = Utils.Utils.GenerateRandomPassword();
 
+        var user = await _telegramUserRepository.AddAsync(telegramId, userName, userPassword);
+        
         await _unitOfWork.CommitAsync();
 
         return user;

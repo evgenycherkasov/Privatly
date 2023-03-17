@@ -19,7 +19,7 @@ public class SubscriptionService : ISubscriptionService
     {
         var activeSubscriptions = (await _subscriptionRepository.GetActiveSubscriptionsAsync(userId, DateTime.Now)).ToList();
         var startTime = activeSubscriptions.Any() 
-            ? activeSubscriptions.Max(s => s!.EndTime) 
+            ? activeSubscriptions.Max(s => s!.EndTime)
             : DateTime.Now;
         var endTime = startTime.AddDays(subscriptionPlan.DurationDays);
         var subscription = await _subscriptionRepository.AddAsync(userId, subscriptionPlan, transaction, startTime, endTime);
@@ -39,7 +39,7 @@ public class SubscriptionService : ISubscriptionService
         var activeSubscriptions = await _subscriptionRepository.GetActiveSubscriptionsAsync(userId, DateTime.Now);
         var subscriptions = activeSubscriptions.ToList();
         return subscriptions.Any() 
-            ? subscriptions.Max(s => s!.EndTime) 
+            ? subscriptions.Max(s => s!.EndTime)
             : null;
     }
 }

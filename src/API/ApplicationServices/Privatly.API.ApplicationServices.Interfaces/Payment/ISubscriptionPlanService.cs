@@ -5,4 +5,6 @@ namespace Privatly.API.ApplicationServices.Interfaces.Payment;
 public interface ISubscriptionPlanService
 {
     Task<SubscriptionPlan?> GetSubscriptionPlan(int id);
+
+    Task<IReadOnlyCollection<SubscriptionPlan>> GetSubscriptionPlans();
 }

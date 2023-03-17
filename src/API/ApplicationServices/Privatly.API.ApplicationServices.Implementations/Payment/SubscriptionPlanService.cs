@@ -18,4 +18,9 @@ public class SubscriptionPlanService : ISubscriptionPlanService
     {
         return _subscriptionPlanRepository.GetAsync(id);
     }
+
+    public Task<IReadOnlyCollection<SubscriptionPlan>> GetSubscriptionPlans()
+    {
+        return _subscriptionPlanRepository.GetAllAsync();
+    }
 }
