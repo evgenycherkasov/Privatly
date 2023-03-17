@@ -19,22 +19,6 @@ public class UserController : ControllerBase
         _subscriptionService = subscriptionService;
     }
 
-    [HttpPost("update_password")]
-    public async Task UpdatePassword(int userId, string? oldPassword, string newPassword)
-    {
-        var user = await _userService.GetBy(userId);
-
-        if (user is null)
-        {
-            Response.StatusCode = StatusCodes.Status404NotFound;
-            return;
-        }
-
-        await _userService.SetPassword(user.Id, oldPassword, newPassword);
-
-        Response.StatusCode = StatusCodes.Status200OK;
-    }
-
     [HttpGet]
     public async Task<UserDto?> GetUserBy(int userId)
     {
@@ -48,7 +32,7 @@ public class UserController : ControllerBase
 
         var subscriptionEndDate = await _subscriptionService.GetEndDateOfSubscriptionAsync(userId);
 
-        var userDto = new UserDto(user.Id, subscriptionEndDate);
+        var userDto = new UserDto(user.Id, user.Login, user.Password, subscriptionEndDate);
 
         return userDto;
     }

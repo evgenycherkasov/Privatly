@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Web;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Privatly.API.ApplicationServices.Interfaces;
 using Privatly.API.ApplicationServices.Interfaces.Payment;
 using Privatly.API.Domain.Entities.Entities.Payments;
-using Privatly.API.Presentation.RESTApiControllers.Middlewares;
 using Yandex.Checkout.V3;
 
 namespace Privatly.API.Presentation.RESTApiControllers;
@@ -29,9 +29,12 @@ public class PaymentController : ControllerBase
         _subscriptionService = subscriptionService;
     }
 
-    [HttpGet("create_payment/{userId}/{subscriptionPlanId}/{returnUrl}")]
+    [HttpGet]
+    [Route("create_payment/{userId}/{subscriptionPlanId}/{returnUrl}")]
     public async Task<string> CreatePayment(int userId, int subscriptionPlanId, string returnUrl)
     {
+        var decodedReturnUrl = HttpUtility.UrlDecode(returnUrl);
+        
         var user = await _userService.GetBy(userId);
 
         if (user is null)
@@ -48,15 +51,15 @@ public class PaymentController : ControllerBase
             return string.Empty;
         }
 
-        var payment = await _paymentService.CreatePaymentAsync(userId, subscriptionPlan, returnUrl);
+        var payment = await _paymentService.CreatePaymentAsync(userId, subscriptionPlan, decodedReturnUrl);
 
         await _transactionService.CreateTransaction(userId, payment.Id, TransactionStatus.Pending, payment.Price,
-            DateTime.Now);
+            DateTime.Now.ToUniversalTime());
 
         return payment.PaymentUrl;
     }
 
-    [ServiceFilter(typeof(ClientIpCheckActionFilter))]
+    //[ServiceFilter(typeof(ClientIpCheckActionFilter))]
     [HttpPost]
     public async Task PaymentCallbackHandler()
     {

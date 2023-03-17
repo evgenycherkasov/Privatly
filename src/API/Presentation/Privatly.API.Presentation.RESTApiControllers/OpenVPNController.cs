@@ -19,7 +19,8 @@ public class OpenVPNController : ControllerBase
         _userService = userService;
     }
 
-    [HttpGet("{login}/{passwordHash}")]
+    [HttpGet]
+    [Route("{login}/{passwordHash}")]
     public async Task<bool?> IsUserHasActiveSubscription(string login, string passwordHash)
     {
         if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(passwordHash))
