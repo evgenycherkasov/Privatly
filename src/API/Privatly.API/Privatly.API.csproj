@@ -23,6 +23,7 @@
     <ItemGroup>
       <ProjectReference Include="..\ApplicationServices\Privatly.API.ApplicationServices.Implementations\Privatly.API.ApplicationServices.Implementations.csproj" />
       <ProjectReference Include="..\Infrastructure\Privatly.API.Infrastructure.PostgreSQL\Privatly.API.Infrastructure.PostgreSQL.csproj" />
+      <ProjectReference Include="..\Infrastructure\Privatly.API.Infrastructure.RabbitMQ\Privatly.API.Infrastructure.RabbitMQ.csproj" />
       <ProjectReference Include="..\Infrastructure\Privatly.API.Infrastructure.Yookassa\Privatly.API.Infrastructure.Yookassa.csproj" />
       <ProjectReference Include="..\Presentation\Privatly.API.Presentation.RESTApiControllers\Privatly.API.Presentation.RESTApiControllers.csproj" />
     </ItemGroup>

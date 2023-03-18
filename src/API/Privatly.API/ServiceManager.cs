@@ -8,6 +8,7 @@ using Privatly.API.ApplicationServices.Interfaces.Payment;
 using Privatly.API.Domain.Interfaces;
 using Privatly.API.Infrastructure.PostgreSQL;
 using Privatly.API.Infrastructure.PostgreSQL.Repositories;
+using Privatly.API.Infrastructure.RabbitMQ;
 using Privatly.API.Infrastructure.Yookassa;
 using Privatly.API.Presentation.RESTApiControllers;
 using Privatly.API.Presentation.RESTApiControllers.Middlewares;
@@ -45,6 +46,16 @@ public class ServiceManager
         services.AddScoped<ISubscriptionPlanService, SubscriptionPlanService>();
         services.AddScoped<ISubscriptionService, SubscriptionService>();
         services.AddScoped<ITransactionService, TransactionService>();
+
+        services.AddSingleton<IRabbitMqService, RabbitMqService>(_ =>
+        {
+            var rabbitMqHostName = _configuration.GetValue<string>("RabbitMqHostName");
+
+            if (string.IsNullOrEmpty(rabbitMqHostName))
+                throw new ArgumentException(nameof(rabbitMqHostName));
+
+            return new RabbitMqService(rabbitMqHostName);
+        });
         
         services.AddSingleton(container =>
         {

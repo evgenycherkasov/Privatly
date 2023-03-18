@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Privatly.API.ApplicationServices.Interfaces;
 using Privatly.API.ApplicationServices.Interfaces.Payment;
+using Privatly.API.Domain.Contracts;
 using Privatly.API.Domain.Entities.Entities.Payments;
 using Privatly.API.Presentation.RESTApiControllers.Middlewares;
 using Yandex.Checkout.V3;
@@ -18,16 +19,18 @@ public class PaymentController : ControllerBase
     private readonly ISubscriptionPlanService _subscriptionPlanService;
     private readonly ITransactionService _transactionService;
     private readonly ISubscriptionService _subscriptionService;
+    private readonly IRabbitMqService _rabbitMqService;
 
     public PaymentController(IPaymentService paymentService, IUserService userService,
-        ISubscriptionPlanService subscriptionPlanService,
-        ITransactionService transactionService, ISubscriptionService subscriptionService)
+        ISubscriptionPlanService subscriptionPlanService, ITransactionService transactionService,
+        ISubscriptionService subscriptionService, IRabbitMqService rabbitMqService)
     {
         _paymentService = paymentService;
         _userService = userService;
         _subscriptionPlanService = subscriptionPlanService;
         _transactionService = transactionService;
         _subscriptionService = subscriptionService;
+        _rabbitMqService = rabbitMqService;
     }
 
     [HttpGet]
@@ -104,7 +107,12 @@ public class PaymentController : ControllerBase
             if (transaction is null)
                 throw new ArgumentException();
 
-            await _subscriptionService.CreateSubscriptionAsync(userId, subscriptionPlan, transaction);
+            var subscription =  await _subscriptionService.CreateSubscriptionAsync(userId, subscriptionPlan, transaction);
+
+            var user = await _userService.GetBy(userId);
+
+            await _rabbitMqService.Post(new UserDto(user!.Id, user.Login, user.Password, subscription.EndTime),
+                "success_payment");
         }
         else
         {
