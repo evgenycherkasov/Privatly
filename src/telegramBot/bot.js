@@ -83,3 +83,7 @@ export async function getTelegramBot(token, apiService) {
 export async function startup(bot) {
     await bot.launch();
 }
+
+export async function sendOnSuccessfulPayment(telegramId) {
+    
+}
