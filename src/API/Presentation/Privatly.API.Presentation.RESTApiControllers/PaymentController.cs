@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Privatly.API.ApplicationServices.Interfaces;
 using Privatly.API.ApplicationServices.Interfaces.Payment;
 using Privatly.API.Domain.Contracts;
+using Privatly.API.Domain.Entities.Entities;
 using Privatly.API.Domain.Entities.Entities.Payments;
 using Privatly.API.Presentation.RESTApiControllers.Middlewares;
 using Yandex.Checkout.V3;
@@ -63,7 +64,7 @@ public class PaymentController : ControllerBase
         return payment.PaymentUrl;
     }
 
-    [ServiceFilter(typeof(ClientIpCheckActionFilter))]
+    //[ServiceFilter(typeof(ClientIpCheckActionFilter))]
     [HttpPost]
     public async Task PaymentCallbackHandler()
     {
@@ -109,10 +110,15 @@ public class PaymentController : ControllerBase
 
             var subscription =  await _subscriptionService.CreateSubscriptionAsync(userId, subscriptionPlan, transaction);
 
-            var user = await _userService.GetBy(userId);
+            var telegramUser = (TelegramUser)(await _userService.GetBy(userId))!;
 
-            await _rabbitMqService.Post(new UserDto(user!.Id, user.Login, user.Password, subscription.EndTime),
-                "success_payment");
+            foreach (var availableQueue in _rabbitMqService.AvailableQueues)
+            {
+                await _rabbitMqService.Post(
+                    new SuccessPaymentDto(userId, telegramUser.TelegramId, telegramUser.Login, telegramUser.Password,
+                        subscription.EndTime),
+                    availableQueue);
+            }
         }
         else
         {
