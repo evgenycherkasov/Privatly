@@ -1,16 +1,16 @@
 import rabbit from "amqplib"
 
 const rabbitMqService = {
-    initializeConsumer : async (bot, apiService) => {
+    initializeConsumer : async (eventEmitter) => {
         let connection = await rabbit.connect({ host: "localhost" });
         let channel = await connection.createChannel();
 
-        channel.consume("success_payment", async (m) => {
+        channel.consume("success_payment_telegram", async (m) => {
             let decoder = new TextDecoder('utf-8');
-            console.log(m.content);
             let decodedMessage = decoder.decode(m.content);
-
-            console.log(decodedMessage);
+            let userData = JSON.parse(decodedMessage);
+            channel.ack(m);
+            eventEmitter.emit("success_payment_telegram", userData);
         });
     }
 }

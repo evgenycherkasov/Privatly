@@ -2,7 +2,7 @@ import { Telegraf } from 'telegraf'
 import { MenuTemplate, MenuMiddleware, createBackMainMenuButtons } from 'telegraf-inline-menu'
 import texts from "./resources/texts.js"
 
-export async function getTelegramBot(token, apiService) {
+export async function getTelegramBot(token, apiService, eventEmitter) {
     const plans = await apiService.getSubscriptionPlans();
 
     const plansNames = plans.map(p => p.name);
@@ -33,19 +33,16 @@ export async function getTelegramBot(token, apiService) {
 
         let isSubscriptionActive = subscriptionEndDate > Date.now();
 
-        return texts.accountMenu.title(user.login, user.password, isSubscriptionActive, new Date(subscriptionEndDate).toDateString());
+        return texts.accountMenu.title(user.login, user.password, isSubscriptionActive, new Date(subscriptionEndDate).toLocaleDateString("en-GB"));
     });
 
-    const faqMenu = new MenuTemplate(texts.faqMenu.title);
 
     letsGoMenu.manualRow(createBackMainMenuButtons(texts.backButtons.backButtonText, texts.backButtons.mainMenuText));
     accountMenu.manualRow(createBackMainMenuButtons(texts.backButtons.backButtonText, texts.backButtons.mainMenuText));
-    faqMenu.manualRow(createBackMainMenuButtons(texts.backButtons.backButtonText, texts.backButtons.mainMenuText));
     paymentMenu.manualRow(createBackMainMenuButtons(texts.backButtons.backButtonText, texts.backButtons.mainMenuText));
 
     mainMenu.submenu(texts.letsGoMenu.buttonText, "letsgo", letsGoMenu);
     mainMenu.submenu(texts.accountMenu.buttonText, "account", accountMenu);
-    mainMenu.submenu(texts.faqMenu.buttonText, "faq", faqMenu);
 
     const bot = new Telegraf(token);
 
@@ -69,6 +66,18 @@ export async function getTelegramBot(token, apiService) {
         let isSubscriptionActive = subscriptionEndDate > Date.now();
 
         await ctx.reply(texts.downloadCommand.text(isSubscriptionActive));
+        let filePath = "resources/client.ovpn";
+        await ctx.replyWithDocument({source : filePath});
+    });
+
+    bot.command('help', async (ctx) => {
+        let userId = await apiService.getUserId(ctx.from.id);
+        let user = await apiService.getUser(userId);
+
+        let subscriptionEndDate = Date.parse(user.subscriptionEndDate);
+        let isSubscriptionActive = subscriptionEndDate > Date.now();
+        
+        await ctx.reply(texts.helpCommand.text(isSubscriptionActive));
     });
 
     bot.use(menuMiddleware.middleware())
@@ -77,13 +86,18 @@ export async function getTelegramBot(token, apiService) {
         console.log('bot error', error)
     })
 
+    eventEmitter.on("success_payment_telegram", async(data) => {
+        let telegramId = data.TelegramId;
+        let endDate = new Date(data.EndSubscriptionDateTime).toLocaleDateString("en-GB")
+
+        await bot.telegram.sendMessage(telegramId, texts.successPayment.text(data.Login, data.Password, endDate), {
+            parse_mode: "Markdown"
+        });
+    });
+
     return bot;
 }
 
 export async function startup(bot) {
     await bot.launch();
-}
-
-export async function sendOnSuccessfulPayment(telegramId) {
-    
 }
