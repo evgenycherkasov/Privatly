@@ -47,15 +47,18 @@ public class ServiceManager
         services.AddScoped<ISubscriptionService, SubscriptionService>();
         services.AddScoped<ITransactionService, TransactionService>();
 
-        services.AddSingleton<IRabbitMqService, RabbitMqService>(_ =>
-        {
-            var rabbitMqHostName = _configuration.GetValue<string>("RabbitMqHostName");
+        var rabbitMqHostName = _configuration.GetValue<string>("RabbitMqHostName");
+        var availableQueues = _configuration.GetValue<string>("RabbitMqQueues")?.Split(';');
+        
+        if (string.IsNullOrEmpty(rabbitMqHostName))
+            throw new ArgumentException(nameof(rabbitMqHostName));
 
-            if (string.IsNullOrEmpty(rabbitMqHostName))
-                throw new ArgumentException(nameof(rabbitMqHostName));
+        if (availableQueues is null)
+            throw new ArgumentException(nameof(availableQueues));
+        
+        var rabbitMqService = new RabbitMqService(rabbitMqHostName, availableQueues);
 
-            return new RabbitMqService(rabbitMqHostName);
-        });
+        services.AddSingleton<IRabbitMqService>(rabbitMqService);
         
         services.AddSingleton(container =>
         {

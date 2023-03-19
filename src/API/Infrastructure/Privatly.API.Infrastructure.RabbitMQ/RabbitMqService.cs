@@ -10,19 +10,26 @@ public class RabbitMqService : IRabbitMqService, IDisposable
     private readonly IConnection _connection;
     private readonly IModel _channel;
 
-    public RabbitMqService(string hostName)
+    public IEnumerable<string> AvailableQueues { get; }
+
+    public RabbitMqService(string hostName, string[] queues)
     {
         var factory = new ConnectionFactory { HostName = hostName };
         _connection = factory.CreateConnection();
         _channel = _connection.CreateModel();
-        
-        _channel.QueueDeclare(queue: "success_payment",
-            durable: false,
-            exclusive: false,
-            autoDelete: false,
-            arguments: null);
-    }
 
+        AvailableQueues = queues;
+
+        foreach (var queue in queues)
+        {
+            _channel.QueueDeclare(queue: queue,
+                durable: false,
+                exclusive: false,
+                autoDelete: false,
+                arguments: null);
+        }
+    }
+    
     public Task Post(object? data, string queueName)
     {
         var dataAsString = JsonSerializer.Serialize(data);
