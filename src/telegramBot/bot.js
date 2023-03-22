@@ -2,6 +2,8 @@ import { Telegraf } from 'telegraf'
 import { MenuTemplate, MenuMiddleware, createBackMainMenuButtons } from 'telegraf-inline-menu'
 import texts from "./resources/texts.js"
 
+const dropBoxLink = "https://www.dropbox.com/sh/anzbgti53tsc9l7/AAAYCeRZfs1UXovv9oOjtrNxa?dl=0";
+
 export async function getTelegramBot(token, apiService, eventEmitter) {
     const plans = await apiService.getSubscriptionPlans();
 
@@ -65,19 +67,21 @@ export async function getTelegramBot(token, apiService, eventEmitter) {
         let subscriptionEndDate = Date.parse(user.subscriptionEndDate);
         let isSubscriptionActive = subscriptionEndDate > Date.now();
 
-        await ctx.reply(texts.downloadCommand.text(isSubscriptionActive));
-        let filePath = "resources/client.ovpn";
-        await ctx.replyWithDocument({source : filePath});
+        await ctx.reply(texts.downloadCommand.text(isSubscriptionActive, dropBoxLink), {disable_web_page_preview : true});
+
+        if (isSubscriptionActive) {
+            let filePath = "resources/privatly.ovpn";
+            await ctx.reply(texts.downloadCommand.ovpnText);
+            await ctx.replyWithDocument({source : filePath});
+        }
     });
 
     bot.command('help', async (ctx) => {
-        let userId = await apiService.getUserId(ctx.from.id);
-        let user = await apiService.getUser(userId);
+        await ctx.reply(texts.helpCommand.text, {disable_web_page_preview : true});
 
-        let subscriptionEndDate = Date.parse(user.subscriptionEndDate);
-        let isSubscriptionActive = subscriptionEndDate > Date.now();
-        
-        await ctx.reply(texts.helpCommand.text(isSubscriptionActive));
+        let filePath = "resources/ios-tutorial.mp4";
+        await ctx.reply(texts.helpCommand.mobileTutorial);
+        await ctx.replyWithVideo({ source : filePath });
     });
 
     bot.use(menuMiddleware.middleware())

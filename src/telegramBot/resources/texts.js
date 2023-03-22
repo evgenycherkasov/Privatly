@@ -1,6 +1,6 @@
 const texts = {
     mainMenu : {
-        title : "Hi✌🏻 Its Privatly!\n\nWe will provide you with an excellent solution to your problems with access to blocked sites with best prices🖥\n\nLeeeeet's goooo🔥"
+        title : "Hi✌🏻 Its Privatly!\n\nWe will provide you with an excellent solution to your problems with access to blocked sites with best prices🖥"
     },
 
     backButtons : {
@@ -9,8 +9,8 @@ const texts = {
     },
 
     letsGoMenu : {
-        buttonText : "Leeeeet's goooo🔥",
-        title : "Our VPN are stable fast reliable and secure🧑‍💻⏫🏰🔐\n\nJust choose the most suitable option for you and start using!"
+        buttonText : "Select subscription",
+        title : "Our VPN are stable fast reliable and secure!\n\nJust choose the most suitable option for you and start using!"
     },
 
     accountMenu : {
@@ -24,7 +24,8 @@ const texts = {
     },
 
     downloadCommand : {
-        text : (isSubscriptionActive) => `${isSubscriptionActive ? 'You can download application for your laptop or PC by link below🧑‍💻\n\n dropbox link to desktop app\n\nAlso, you can use .ovpn configuration to setup your OpenVPN Connect application via smartphone\n\nIf you need help installing Privatly VPN you can use the /help command!' : 'Sorry but you have not active subscription😔'}`
+        ovpnText: "That is your .ovpn configuration for connect to Privatly VPN!",
+        text : (isSubscriptionActive, link) => `${isSubscriptionActive ? `You can download application for your laptop or PC by link below🧑‍💻\n\nThat is your link for desktop application: ${link}\n\nAlso, you can use .ovpn configuration to setup your OpenVPN Connect application via smartphone\n\nIf you need help installing Privatly VPN you can use the /help command!` : 'Sorry but you have not active subscription😔'}`
     },
 
     successPayment : {
@@ -32,7 +33,8 @@ const texts = {
     },
 
     helpCommand : {
-        text : (isSubscriptionActive) => `${isSubscriptionActive ? "To set up Privatly VPN you need to watch one of our two video tutorials\n\nFirst video instruction is for Privatly VPN for your laptop or PC\n\nSecond video instruction is for Privatly VPN for your smartphone\n\nIf you have any questions, you can contact our support @evgrcg" : 'Sorry but you have not active subscription😔'}` 
+        mobileTutorial : "That is your tutorial to setup Privatly VPN in your smartphone!",
+        text : "To set up Privatly VPN you can watch our video tutorial\n\nInstall OpenVPN Connect app firstly\n\niOS: https://apps.apple.com/ru/app/openvpn-connect/id590379981\nAndroid: https://play.google.com/store/apps/details?id=net.openvpn.openvpn&hl=ru&gl=US&pli=1\n\nIf you have any questions, you can contact our support @evgrcg"
     }
 }
 export default texts;
