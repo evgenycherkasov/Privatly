@@ -15,7 +15,6 @@ public static class Utils
         opts ??= new PasswordOptions()
         {
             RequiredLength = 8,
-            RequiredUniqueChars = 4,
             RequireDigit = true,
             RequireLowercase = true,
             RequireUppercase = true
@@ -26,7 +25,6 @@ public static class Utils
             "ABCDEFGHJKLMNOPQRSTUVWXYZ", // uppercase 
             "abcdefghijkmnopqrstuvwxyz", // lowercase
             "0123456789", // digits
-            "!@$?_-" // non-alphanumeric
         };
 
         Random rand = new Random(Environment.TickCount);
@@ -45,8 +43,7 @@ public static class Utils
                 randomChars[2][rand.Next(0, randomChars[2].Length)]);
 
         for (int i = chars.Count;
-             i < opts.RequiredLength
-             || chars.Distinct().Count() < opts.RequiredUniqueChars;
+             i < opts.RequiredLength;
              i++)
         {
             string rcs = randomChars[rand.Next(0, randomChars.Length)];
@@ -60,7 +57,6 @@ public static class Utils
     public class PasswordOptions
     {
         public int RequiredLength { get; set; }
-        public int RequiredUniqueChars { get; set; }
         public bool RequireDigit { get; set; }
         public bool RequireLowercase { get; set; }
         public bool RequireUppercase { get; set; }
