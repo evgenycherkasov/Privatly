@@ -12,9 +12,9 @@ public class RabbitMqService : IRabbitMqService, IDisposable
 
     public IEnumerable<string> AvailableQueues { get; }
 
-    public RabbitMqService(string hostName, string[] queues)
+    public RabbitMqService(string hostName, string userName, string password, string[] queues)
     {
-        var factory = new ConnectionFactory { HostName = hostName };
+        var factory = new ConnectionFactory { HostName = hostName, UserName = userName, Password = password };
         _connection = factory.CreateConnection();
         _channel = _connection.CreateModel();
 
