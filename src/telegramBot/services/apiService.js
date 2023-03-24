@@ -1,6 +1,6 @@
 import {getSubscriptionPlans, getPaymentUrl, getUserId, createUser, getUser} from "../api/privatlyApiInteraction.js";
 
-const returnUrl = "https://web.telegram.org/k/#@DesignLidsBot";
+const returnUrl = "https://t.me/privatlybot";
 
 const apiService = {
     createUser : async (telegramId) => {

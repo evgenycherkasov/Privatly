@@ -2,7 +2,7 @@ import axios from "axios"
 import https from 'https'
 
 
-const baseUrl = "https://192.168.0.108:8443/api";
+const baseUrl = "https://privatlyvpn.pro/api";
 
 const httpsAgent = new https.Agent({
     rejectUnauthorized: false,
