@@ -27,7 +27,7 @@ public class ServiceManager
     public void Configure(IServiceCollection services)
     {
         services.AddDbContext<PostgreDatabaseContext>(options =>
-            options.UseNpgsql("host=127.0.0.1;port=5432;database=privatlyapi;username=admin;password=password"));// Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")));
+            options.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")));
 
         services.Configure<YookassaAuthData>(_configuration.GetSection("YookassaAuthData"));
 
@@ -47,16 +47,25 @@ public class ServiceManager
         services.AddScoped<ISubscriptionService, SubscriptionService>();
         services.AddScoped<ITransactionService, TransactionService>();
 
-        var rabbitMqHostName = _configuration.GetValue<string>("RabbitMqHostName");
+        var rabbitMqHostName = Environment.GetEnvironmentVariable("RABBITMQ_HOSTNAME");
+        var rabbitMqUserName = Environment.GetEnvironmentVariable("RABBITMQ_USERNAME");
+        var rabbitMqPassword = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD");
+
         var availableQueues = _configuration.GetValue<string>("RabbitMqQueues")?.Split(';');
         
         if (string.IsNullOrEmpty(rabbitMqHostName))
             throw new ArgumentException(nameof(rabbitMqHostName));
 
+        if (string.IsNullOrEmpty(rabbitMqUserName))
+            throw new ArgumentException(nameof(rabbitMqUserName));
+            
+        if (string.IsNullOrEmpty(rabbitMqPassword))
+            throw new ArgumentException(nameof(rabbitMqPassword));
+
         if (availableQueues is null)
             throw new ArgumentException(nameof(availableQueues));
         
-        var rabbitMqService = new RabbitMqService(rabbitMqHostName, availableQueues);
+        var rabbitMqService = new RabbitMqService(rabbitMqHostName, rabbitMqUserName, rabbitMqPassword, availableQueues);
 
         services.AddSingleton<IRabbitMqService>(rabbitMqService);
         
