@@ -3,42 +3,53 @@ version: '3.4'
 networks:
   network-dev:
     driver: bridge 
-
 services:
-  # privatlyapi:
-  #   image: privatlyapi:latest
-  #   depends_on:
-  #     - "postgres_image"
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "80:80"
-  #   environment:
-  #     DB_CONNECTION_STRING: "host=postgres_image;port=5432;database=privatlyapi;username=admin;password=password"
-  #   networks:
-  #     - network-dev  
-  rabbitmq:
-    image: rabbitmq:3-management-alpine
-    container_name: 'rabbitmq'
+  privatlyapi:
+    image: privatlyapi:latest
+    depends_on:
+      postgres_image:
+        condition: service_started
+      rabbitmq_image:
+        condition: service_started
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-        - 5672:5672
-        - 15672:15672
-    volumes:
-        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+      - "80:80"
+    environment:
+      DB_CONNECTION_STRING: "host=postgres_image;port=5432;database=privatlyapi;username=privatly_admin;password=Ytnrjhjkzevth1"
+      RABBITMQ_HOSTNAME: "rabbitmq_image"
+      RABBITMQ_USERNAME: "local_jobs"
+      RABBITMQ_PASSWORD: "test12"
     networks:
-        - network-dev
+      - network-dev  
+  rabbitmq_image:
+    image: rabbitmq:3-management-alpine
+    hostname: rabbitmq_image
+    ports:
+      - 5672:5672
+      - 15672:15672
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:15672"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+    volumes:
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
+    networks:
+      - network-dev 
   postgres_image:
     image: postgres:14-alpine
+    hostname: postgres_image
     ports:
       - "5432:5432"
     restart: always
     volumes:
       - db_volume:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: "admin"
-      POSTGRES_PASSWORD: "password"
+      POSTGRES_USER: "privatly_admin"
+      POSTGRES_PASSWORD: "Ytnrjhjkzevth1"
       POSTGRES_DB: "privatlyapi"
     networks:
       - network-dev
